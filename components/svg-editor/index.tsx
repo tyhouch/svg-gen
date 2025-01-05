@@ -73,7 +73,7 @@ export function SVGEditor() {
       <div className="w-[400px] border-l flex flex-col">
         <div className="p-4 border-b bg-muted/20">
           <h2 className="font-semibold">Graphics Generator</h2>
-          <p className="text-sm text-muted-foreground">Describe what you'd like to create or modify</p>
+          <p className="text-sm text-muted-foreground">Describe what you&apos;d like to create or modify</p>
         </div>
         <ChatInterface 
           messages={messages} 
