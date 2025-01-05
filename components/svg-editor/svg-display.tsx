@@ -1,6 +1,6 @@
 import { Version } from '@/types'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Loader2, Download } from 'lucide-react'
 
 interface SVGDisplayProps {
   currentVersion: number
@@ -16,6 +16,20 @@ export function SVGDisplay({
   isLoading,
 }: SVGDisplayProps) {
   const currentSVG = versions[currentVersion]?.svg
+
+  const handleDownload = () => {
+    if (!currentSVG) return
+    
+    const blob = new Blob([currentSVG], { type: 'image/svg+xml' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `svg-${currentVersion + 1}.svg`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
 
   return (
     <div className="relative h-full flex flex-col">
@@ -41,6 +55,15 @@ export function SVGDisplay({
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleDownload}
+              disabled={!currentSVG}
+              title="Download SVG"
+            >
+              <Download className="h-4 w-4" />
+            </Button>
           </div>
         )}
         
@@ -63,7 +86,7 @@ export function SVGDisplay({
         </div>
       </div>
 
-      <div className="p-4 flex items-center justify-center gap-4 border-t bg-background/50 backdrop-blur-sm">
+      <div className="hidden md:flex p-4 items-center justify-center gap-4 border-t bg-background/50 backdrop-blur-sm">
         <a 
           href="https://www.kamiwaza.ai" 
           target="_blank" 

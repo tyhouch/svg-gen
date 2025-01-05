@@ -44,8 +44,15 @@ export function SVGEditor() {
         setVersions([...versions, newVersion])
         setCurrentVersion(versions.length)
         
-        // Add assistant message without the SVG code
-        setMessages([...messages, newMessage, { role: 'assistant', content: 'I&apos;ve updated the graphic based on your request.' }])
+        // Add assistant message with version number
+        setMessages([
+          ...messages, 
+          newMessage, 
+          { 
+            role: 'assistant', 
+            content: `Version ${versions.length + 1} created. Click the arrows in the top-left to navigate between versions.` 
+          }
+        ])
       }
     } catch (error) {
       console.error('Error:', error)
@@ -61,25 +68,37 @@ export function SVGEditor() {
   }
 
   return (
-    <div className="h-screen flex">
-      <div className="flex-1 bg-muted/50">
-        <SVGDisplay
-          currentVersion={currentVersion}
-          versions={versions}
-          onVersionChange={setCurrentVersion}
-          isLoading={isLoading}
-        />
-      </div>
-      <div className="w-[400px] border-l flex flex-col">
-        <div className="p-4 border-b bg-muted/20">
-          <h2 className="font-semibold">Graphics Generator</h2>
-          <p className="text-sm text-muted-foreground">Describe what you&apos;d like to create or modify</p>
+    <div className="h-screen flex flex-col">
+      <div className="flex-1 flex flex-col md:flex-row">
+        <div className="flex-1 bg-muted/50 min-h-[40vh] md:min-h-0">
+          <SVGDisplay
+            currentVersion={currentVersion}
+            versions={versions}
+            onVersionChange={setCurrentVersion}
+            isLoading={isLoading}
+          />
         </div>
-        <ChatInterface 
-          messages={messages} 
-          onSendMessage={handleSendMessage}
-          isLoading={isLoading} 
-        />
+        <div className="w-full md:w-[400px] border-t md:border-t-0 md:border-l flex flex-col">
+          <div className="hidden md:block p-4 border-b bg-muted/20">
+            <h2 className="font-semibold">Graphics Generator</h2>
+            <p className="text-sm text-muted-foreground">Describe what you&apos;d like to create or modify</p>
+          </div>
+          <ChatInterface 
+            messages={messages} 
+            onSendMessage={handleSendMessage}
+            isLoading={isLoading} 
+          />
+        </div>
+      </div>
+      <div className="md:hidden p-4 flex items-center justify-center border-t bg-background/50 backdrop-blur-sm">
+        <a 
+          href="https://www.kamiwaza.ai" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-[rgb(65,138,105)] hover:underline"
+        >
+          Powered by Kamiwaza
+        </a>
       </div>
     </div>
   )
