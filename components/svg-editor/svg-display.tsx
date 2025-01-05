@@ -1,7 +1,6 @@
 import { Version } from '@/types'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
-import Image from 'next/image'
 
 interface SVGDisplayProps {
   currentVersion: number
@@ -58,7 +57,7 @@ export function SVGDisplay({
             />
           ) : (
             <div className="text-muted-foreground">
-              Describe what graphic you'd like to create...
+              Describe what graphic you&apos;d like to create...
             </div>
           )}
         </div>

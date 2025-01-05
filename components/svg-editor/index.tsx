@@ -45,7 +45,7 @@ export function SVGEditor() {
         setCurrentVersion(versions.length)
         
         // Add assistant message without the SVG code
-        setMessages([...messages, newMessage, { role: 'assistant', content: 'I\'ve updated the graphic based on your request.' }])
+        setMessages([...messages, newMessage, { role: 'assistant', content: 'I&apos;ve updated the graphic based on your request.' }])
       }
     } catch (error) {
       console.error('Error:', error)
